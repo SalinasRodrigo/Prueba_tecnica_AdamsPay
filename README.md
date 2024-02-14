@@ -20,8 +20,12 @@ documentación.
 ## Objetivos
 
 - [ ] Frontend:
-  - [ ] Desplegar productos.
+  - [x] Desplegar productos.
   - [ ] Carrito.
+    - [x] Diseño.
+    - [ ] Agregar al carrito.
+    - [ ] Remover del carrito.
+    - [ ] limpiar el carrito.
   - [ ] Pago.
   - [ ] Interfaz de administrador.
   - [ ] Login.
