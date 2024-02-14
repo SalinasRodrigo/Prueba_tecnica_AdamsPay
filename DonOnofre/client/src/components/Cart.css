@@ -1,11 +1,17 @@
 .cart {
   background: #000;
   display: none;
-  padding: 32px;
+  padding: 0px 32px;
   position: fixed;
   right: 0px;
   top: 0px;
   width: 200px;
+  overflow: auto;
+
+  & ul {
+    list-style: none;
+    padding: 0;
+  }
 }
 
 .cart img {
@@ -53,4 +59,10 @@
 .cart-button ~ input:checked ~ .cart {
   height: 100%;
   display: block;
+}
+
+.cart-footer-btns{
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
 }

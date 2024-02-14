@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 
 import { useId } from "react";
-import { CartIcon, ClearCartIcon } from "./Icons";
+import { CartIcon, ClearCartIcon, PayIcon } from "./Icons";
 import "./Cart.css";
+import { useCart } from "../hooks/useCart";
 
-function CartItem({ thumbnail, price, title }) {
+function CartItem({ thumbnail, price, title, quantity, addToCart }) {
   return (
     <li>
       <img src={thumbnail} alt={title} />
@@ -13,15 +14,16 @@ function CartItem({ thumbnail, price, title }) {
       </div>
 
       <footer>
-        <small>Qty:</small>
-        <button >+</button>
+        <small>Qty: {quantity}</small>
+        <button onClick={addToCart} >+</button>
       </footer>
     </li>
   );
 }
 
 
-export const Cart = ({cart}) => {
+export const Cart = () => {
+  const {cart, addToCart, clearCart} = useCart()
   const cartCheckBox = useId();
   return(
     <>
@@ -36,12 +38,18 @@ export const Cart = ({cart}) => {
             <CartItem
               key={product.id}
               {...product}
+              addToCart={() => addToCart(product)}
             />
           ))}
         </ul>
-        <button>
-          <ClearCartIcon/>
-        </button>
+        <div className="cart-footer-btns">
+          <button onClick={clearCart}>
+            <ClearCartIcon/>
+          </button>
+          <button>
+            <PayIcon/>
+          </button>
+        </div>
       </aside>
     </>
   )
