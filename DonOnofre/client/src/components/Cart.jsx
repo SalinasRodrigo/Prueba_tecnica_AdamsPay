@@ -5,6 +5,9 @@ import { CartIcon, ClearCartIcon, PayIcon } from "./Icons";
 import "./Cart.css";
 import { useCart } from "../hooks/useCart";
 
+const API_KEY = 'ap-ca19841501670f92e938b685' 
+const PAY_END_POINT = 'https://staging.adamspay.com/api/v1/debts'
+
 function CartItem({ thumbnail, price, title, quantity, addToCart }) {
   return (
     <li>
@@ -25,6 +28,47 @@ function CartItem({ thumbnail, price, title, quantity, addToCart }) {
 export const Cart = () => {
   const {cart, addToCart, clearCart} = useCart()
   const cartCheckBox = useId();
+
+  const handlePay = () => {
+    let total = 0
+    let description = ''
+    cart.forEach(item => {
+      total += item.price * item.quantity
+      description += `${item.title} qty: ${item.quantity} - `
+    });
+    console.log(description, total)
+
+    const inicio_validez = new Date()
+    const fin_validez = new Date()
+    fin_validez.setDate(fin_validez.getDate() + 2)
+    const idDeuda = "demo005"
+    const siExiste = "update"
+    const debt = {
+      "docId": idDeuda,
+      "amount": {"currency": "PYG","value": total},
+      "label": description,
+      "validPeriod":{
+        "start":inicio_validez.toISOString(),
+        "end":fin_validez.toISOString(),
+      }
+    }
+    const headers = {
+      'apikey': API_KEY,
+      'Content-Type': 'application/json',
+      'x-if-exists': siExiste,
+    }
+    console.log(headers, debt)
+
+    fetch(PAY_END_POINT,{
+      method: 'POST',
+      cache: 'no-cache',
+      headers: headers,
+      body: debt,
+    }).then(res => {
+      console.log(res)
+    })
+  }
+
   return(
     <>
       <label className="cart-button" htmlFor={cartCheckBox}>
@@ -46,7 +90,7 @@ export const Cart = () => {
           <button onClick={clearCart}>
             <ClearCartIcon/>
           </button>
-          <button>
+          <button onClick={handlePay}>
             <PayIcon/>
           </button>
         </div>

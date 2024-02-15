@@ -21,15 +21,15 @@ documentación.
 
 - [ ] Frontend:
   - [x] Desplegar productos.
-  - [ ] Carrito.
+  - [x] Carrito.
     - [x] Diseño.
-    - [ ] Agregar al carrito.
-    - [ ] Remover del carrito.
-    - [ ] limpiar el carrito.
+    - [x] Agregar al carrito.
+    - [x] Remover del carrito.
+    - [x] limpiar el carrito.
   - [ ] Pago.
+    - [ ] Conexión con la API de pago.
   - [ ] Interfaz de administrador.
   - [ ] Login.
-  - [ ] Conexión con la API de pago.
   - [ ] Conexión con la API de backend.
   - [ ] Opcional:
     - [ ] Buscador.
