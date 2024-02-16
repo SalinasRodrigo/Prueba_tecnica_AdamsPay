@@ -1,12 +1,25 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
-import products from '../mooks/products.json';
+import { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext()
 
 export function CartProvider({children}){
   const [cart, setCart] = useState([])
-  const [productos, setProductos] = useState(products.products) 
+  const [productos, setProductos] = useState([])
+
+  useEffect(()=>{
+    getProducts()
+  }, [])
+
+  const getProducts = ()=> {
+    fetch('/api/products/')
+      .then(res => res.json())
+      .then(response => {
+        const products = response
+        console.log(products)
+        setProductos(products)
+      })
+  }
 
   const addToCart = product => {
 

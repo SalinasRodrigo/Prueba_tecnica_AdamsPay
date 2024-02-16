@@ -37,11 +37,15 @@ documentación.
     - [ ] Responsive.
 
 - [ ] Backend:
-  - [ ] Modelos de productos.
+  - [x] Modelos de productos.
   - [ ] Modelos de usuarios.
-  - [ ] Serializadores para los modelos.
-  - [ ] Views de productos.
+  - [x] Serializadores para los modelos.
+  - [x] Views de productos.
   - [ ] Views de usuario.
+    - [ ] Get.
+    - [ ] Create.
+    - [ ] Update.
+    - [ ] Delete.
   - [ ] Configuración para postgres.
 
 - [ ] Despliegue (aws?)

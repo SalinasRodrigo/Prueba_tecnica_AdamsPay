@@ -1,19 +1,22 @@
-import { useCart } from "../hooks/useCart"
-import { Product } from "./Product"
-
+import { useCart } from "../hooks/useCart";
+import { Product } from "./Product";
 
 export const ProductList = () => {
-  const {productos} = useCart()
+  const { productos } = useCart();
 
-  return(
-    <div className='product-list'>
-      {productos.map(item => {
-        return(
-          <div key={item.id}>
-            <Product product={item}/>
-          </div>
-        )    
-      })}
+  return (
+    <div className="product-list">
+      {productos.length > 0 ? (
+        productos.map((item) => {
+          return (
+            <div key={item.id}>
+              <Product product={item} />
+            </div>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </div>
-  )
-}
+  );
+};
