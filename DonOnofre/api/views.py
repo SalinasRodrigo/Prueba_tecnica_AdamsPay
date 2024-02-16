@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Product
+from .models import Product, Debt
 from .serializaers import ProductSerializer, UserSerializer
-from django.contrib.auth.models import User, UserManager
-
+from django.contrib.auth.models import User
+from .service import payApi
 
 # Create your views here.
 @api_view(["GET"])
@@ -155,3 +155,23 @@ def updateUsers(request):
     user.save()
     serialUser = UserSerializer(user, many=False)
     return Response(serialUser.data)
+
+@api_view(["POST"])
+def pay(request):
+    #Se obtienen los datos de la solicitud
+    data = request.data
+
+    #Se encuentra el id de la ultima deuda en la base de datos y le sumamos 1
+    debt_id = Debt.objects.latest('id').id + 1
+
+    #Creamos la deuda llmando a la api
+    res = payApi(data['description'], data['value'], debt_id)
+    
+    #Buscamos el usuario que esta generando la deuda en la base de datos
+    user = User.objects.get(id=data['id'])
+
+    #Guardamos la deuda en la base de datos la deuda
+    debt = Debt(description=data['description'], value=data['value'], user=user)
+    debt.save()
+
+    return Response(res)

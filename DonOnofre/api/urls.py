@@ -12,4 +12,5 @@ urlpatterns = [
     path('user/', view=views.getOneUsers, name="one-user"),
     path('users/create/', view=views.createUsers, name="create-users"),
     path('users/update/', view=views.updateUsers, name="update-users"),
+    path('pay/', view=views.pay, name="pay"),
 ]
