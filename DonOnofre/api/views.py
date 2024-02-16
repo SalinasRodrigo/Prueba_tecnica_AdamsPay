@@ -2,7 +2,8 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import Product
-from .serializaers import ProductSerializer 
+from .serializaers import ProductSerializer, UserSerializer
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -87,3 +88,38 @@ def deleteProduct (request, pk):
     product = Product.objects.get(id=pk)
     product.delete()
     return Response("delete succese")
+
+@api_view(['GET'])
+def getUsers (request):
+    users = User.objects.all()
+    serial_users = UserSerializer(users, many=True)
+    return Response(serial_users.data)
+
+@api_view(['POST'])
+def getOneUsers (request):
+    data = request.data
+    users = User.objects.get(email=data['email'])
+    if(users.check_password(data['password'])):
+      serial_users = UserSerializer(users, many=False)
+      return Response(serial_users.data)
+    
+    return Response("ERROR")
+
+
+# @api_view(['GET'])
+# def createUsers (request):
+#     users = User.objects.all()
+#     serial_users = UserSerializer(users, many=True)
+#     return Response(serial_users.data)
+
+# @api_view(['GET'])
+# def deleteUsers (request):
+#     users = User.objects.all()
+#     serial_users = UserSerializer(users, many=True)
+#     return Response(serial_users.data)
+
+# @api_view(['GET'])
+# def updateUsers (request):
+#     users = User.objects.all()
+#     serial_users = UserSerializer(users, many=True)
+#     return Response(serial_users.data)

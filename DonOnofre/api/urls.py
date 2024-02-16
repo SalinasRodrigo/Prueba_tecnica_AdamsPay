@@ -8,4 +8,6 @@ urlpatterns = [
     path('products/<int:pk>/update', view=views.updateProduct, name="update-product"),
     path('products/<int:pk>/delete', view=views.deleteProduct, name="delete-product"),
     path('products/create', view=views.createProduct, name="create-product"),
+    path('users/', view=views.getUsers, name="users"),
+    path('user/', view=views.getOneUsers, name="user"),
 ]
