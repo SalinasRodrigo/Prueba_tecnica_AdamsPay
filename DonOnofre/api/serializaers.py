@@ -10,4 +10,4 @@ class ProductSerializer (ModelSerializer):
 class UserSerializer (ModelSerializer):
   class Meta:
     model = User
-    fields = ['username','email']
+    fields = ['username','email','is_staff']
