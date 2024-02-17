@@ -55,10 +55,10 @@ documentación.
 
 ## Herramientas utilizadas
 
- - Backend: Python-Django.
-  - DjangoRestFramework.
-  - Django-cors-headers. 
- - Frontend: Reactjs.
+  - Backend: Python-Django.
+    - DjangoRestFramework.
+    - Django-cors-headers. 
+  - Frontend: Reactjs.
 
 
 

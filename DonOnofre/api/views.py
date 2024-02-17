@@ -129,7 +129,6 @@ def getUsers(request):
 @api_view(["POST"])
 def getOneUsers(request):
     data = request.data
-    print(data)
     users = User.objects.get(username=data["username"])
     if users.check_password(data["password"]):
         serial_users = UserSerializer(users, many=False)
