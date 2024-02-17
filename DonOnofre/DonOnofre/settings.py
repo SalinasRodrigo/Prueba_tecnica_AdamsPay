@@ -56,6 +56,11 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
+ALLOWED_HOSTS = [
+  '13.59.0.51', 
+  'localhost',
+  ]
+
 ROOT_URLCONF = 'DonOnofre.urls'
 
 TEMPLATES = [
