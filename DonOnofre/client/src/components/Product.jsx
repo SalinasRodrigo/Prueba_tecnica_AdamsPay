@@ -7,7 +7,7 @@ import { UpdateForm } from "./UpdateForm";
 
 export const Product = ({ product }) => {
   const { cart, addToCart, removeFromCart, setProductos } = useCart();
-  const {user} = useUser()
+  const { user } = useUser();
 
   const checkProductInCart = (product) => {
     return cart.some((item) => item.id === product.id);
@@ -32,7 +32,9 @@ export const Product = ({ product }) => {
         "Content-type": "application/json",
       },
     });
-    setProductos((prevState) => prevState.filter((item) => item.id != product.id));
+    setProductos((prevState) =>
+      prevState.filter((item) => item.id != product.id)
+    );
     const dialog = document.getElementById(`delete-${product.id}`);
     dialog.close();
   };
@@ -49,24 +51,33 @@ export const Product = ({ product }) => {
           </div>
         </div>
         <div className="product-btns">
-          {checkProductInCart(product) ? (
-            <button onClick={() => removeFromCart(product)}>
-              <RemoveFromCartIcon />
-            </button>
+          {!user || !user.is_staff ? (
+            <div>
+              {checkProductInCart(product) ? (
+                <button onClick={() => removeFromCart(product)}>
+                  <RemoveFromCartIcon />
+                </button>
+              ) : (
+                <button onClick={() => addToCart(product)}>
+                  <AddToCartIcon />
+                </button>
+              )}
+            </div>
           ) : (
-            <button onClick={() => addToCart(product)}>
-              <AddToCartIcon />
-            </button>
+            <></>
           )}
-          {user && user.is_staff ?<>
-            <button onClick={() => handleShow(`delete-${product.id}`)}>
-              Delete
-            </button>
-            <button onClick={() => handleShow(`update-${product.id}`)}>
-              Update
-            </button>
-          </>:
-          <></>}
+          {user && user.is_staff ? (
+            <>
+              <button onClick={() => handleShow(`delete-${product.id}`)}>
+                Delete
+              </button>
+              <button onClick={() => handleShow(`update-${product.id}`)}>
+                Update
+              </button>
+            </>
+          ) : (
+            <></>
+          )}
           <dialog className="form-dialog" id={`update-${product.id}`}>
             <h2>Actualizar Producto</h2>
             <UpdateForm product={product} />

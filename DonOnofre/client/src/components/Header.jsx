@@ -1,3 +1,4 @@
+import { useCart } from "../hooks/useCart";
 import { useUser } from "../hooks/useUser";
 import { CreateForm } from "./CreateForm";
 import "./Header.css";
@@ -6,6 +7,7 @@ import { SigninForm } from "./Signin";
 
 export const Header = () => {
   const { user, setUser } = useUser();
+  const { clearCart } = useCart();
 
   const handleShow = (name) => {
     const dialog = document.getElementById(name);
@@ -20,7 +22,8 @@ export const Header = () => {
   const logout = (id) => {
     const dialog = document.getElementById(id);
     setUser(null);
-    window.localStorage.setItem('user', JSON.stringify(null))
+    window.localStorage.setItem("user", JSON.stringify(null));
+    clearCart();
     dialog.close();
   };
 
@@ -35,7 +38,11 @@ export const Header = () => {
           <button onClick={() => handleShow(`login`)}>Iniciar sesion</button>
         )}
 
-        {user ? <></> : <button onClick={() => handleShow(`signin`)}>Reistrarte</button>}
+        {user ? (
+          <></>
+        ) : (
+          <button onClick={() => handleShow(`signin`)}>Reistrarte</button>
+        )}
 
         {user && user.is_staff ? (
           <button onClick={() => handleShow(`create`)}>Nuevo Producto</button>
@@ -53,7 +60,7 @@ export const Header = () => {
       </dialog>
       <dialog className="signin-dialog" id={`signin`}>
         <h2>Registrate</h2>
-        <SigninForm/>
+        <SigninForm />
       </dialog>
       <dialog className="logout-dialog" id={`logout`}>
         <div>

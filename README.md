@@ -26,26 +26,27 @@ documentación.
     - [x] Agregar al carrito.
     - [x] Remover del carrito.
     - [x] limpiar el carrito.
-  - [ ] Pago.
-    - [ ] Conexión con la API de pago.
-  - [ ] Interfaz de administrador.
-  - [ ] Login.
-  - [ ] Conexión con la API de backend.
+  - [x] Pago.
+    - [x] Conexión con la API de pago.
+  - [x] Interfaz de administrador.
+  - [x] Login.
+  - [x] Conexión con la API de backend.
   - [ ] Opcional:
     - [ ] Buscador.
     - [ ] Filtro.
     - [ ] Responsive.
 
 - [ ] Backend:
-  - [x] Modelos de productos.
-  - [ ] Modelos de usuarios.
+  - [x] Modelo de productos.
+  - [x] Modelo de usuarios.
+  - [x] Modelo de deuda.
   - [x] Serializadores para los modelos.
   - [x] Views de productos.
-  - [ ] Views de usuario.
-    - [ ] Get.
-    - [ ] Create.
-    - [ ] Update.
-    - [ ] Delete.
+  - [x] Views de usuario.
+    - [x] Get.
+    - [x] Create.
+    - [x] Update.
+    - [x] Delete.
   - [ ] Configuración para postgres.
 
 - [ ] Despliegue (aws?)
@@ -55,6 +56,8 @@ documentación.
 ## Herramientas utilizadas
 
  - Backend: Python-Django.
+  - DjangoRestFramework.
+  - Django-cors-headers. 
  - Frontend: Reactjs.
 
 
