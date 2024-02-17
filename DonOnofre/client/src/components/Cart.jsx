@@ -32,6 +32,7 @@ export const Cart = () => {
       alert("inicie seción para realizar el para realizar el pago")
       return
     }
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     let total = 0;
     let description = "";
     let res = null;
@@ -49,6 +50,7 @@ export const Cart = () => {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        'X-CSRFToken': csrftoken,
       },
       body: JSON.stringify(debt),
     })

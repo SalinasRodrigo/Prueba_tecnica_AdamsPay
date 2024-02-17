@@ -179,5 +179,5 @@ def pay(request):
     #Guardamos la deuda en la base de datos la deuda
     debt = Debt(description=data['description'], value=data['value'], user=user)
     debt.save()
-    print(res)
+    
     return Response(res)

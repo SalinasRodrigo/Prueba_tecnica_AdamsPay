@@ -15,12 +15,14 @@ export const CreateForm = () => {
     event.preventDefault();
     const data = new FormData(event.target);
     const newProduct = Object.fromEntries(data);
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
     //llamada a la api
     fetch(`/api/products/create`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        'X-CSRFToken': csrftoken,
       },
       body: JSON.stringify(newProduct),
     });

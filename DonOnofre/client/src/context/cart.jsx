@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 
+const cartInitialState = JSON.parse(window.localStorage.getItem('cart')) || [];
 export const CartContext = createContext()
 
 export function CartProvider({children}){
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState(cartInitialState)
   const [productos, setProductos] = useState([])
 
   useEffect(()=>{
@@ -29,22 +30,28 @@ export function CartProvider({children}){
       const newCart = structuredClone(cart)
       newCart[productCartIndex].quantity += 1
       setCart(newCart)
+      window.localStorage.setItem('cart', JSON.stringify(newCart))
     }else{
-      setCart(prevState => ([
-        ...prevState,{
+      const newCart = [
+        ...cart,{
           ...product,
           quantity: 1
         }
-      ]))
+      ]
+      setCart(newCart)
+      window.localStorage.setItem('cart', JSON.stringify(newCart))
     }
   }
 
   const removeFromCart = product => {
-    setCart(prevState => prevState.filter(item => item.id !== product.id))
+    const newCart = cart.filter(item => item.id !== product.id)
+    setCart(newCart)
+    window.localStorage.setItem('cart', JSON.stringify(newCart))
   }
 
   const clearCart = () => {
     setCart([])
+    window.localStorage.setItem('cart', JSON.stringify([]))
   }
 
   return(

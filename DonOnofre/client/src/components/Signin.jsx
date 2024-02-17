@@ -17,6 +17,7 @@ export const SigninForm = () => {
     const user = Object.fromEntries(data);
     createUser(user)
     const dialog = document.getElementById(`signin`);
+    window.localStorage.setItem('user', JSON.stringify(user))
     dialog.close();
   };
 

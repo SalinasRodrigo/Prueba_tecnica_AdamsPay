@@ -21,20 +21,21 @@ export const LoginForm = () => {
   };
 
   const getUser = (user) => {
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
     fetch("/api/user/", {
       method: "POST",
       headers: {
         "Content-type": "application/json",
+        'X-CSRFToken': csrftoken,
       },
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
       .then((response) => {
         const user = response;
-        console.log(user);
         setUser(user);
+        window.localStorage.setItem('user', JSON.stringify(user))
       });
-    console.log(user);
   };
 
   return (

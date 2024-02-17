@@ -20,6 +20,7 @@ export const Header = () => {
   const logout = (id) => {
     const dialog = document.getElementById(id);
     setUser(null);
+    window.localStorage.setItem('user', JSON.stringify(null))
     dialog.close();
   };
 

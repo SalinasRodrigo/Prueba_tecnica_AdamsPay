@@ -15,12 +15,15 @@ export const UpdateForm = ({ product }) => {
     event.preventDefault();
     const data = new FormData(event.target);
     const newProduct = Object.fromEntries(data);
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    
     console.log(`/api/products/${product.id}/update/`)
     //llamada a la api
     fetch(`/api/products/${product.id}/update`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json",
+        'X-CSRFToken': csrftoken,
       },
       body: JSON.stringify(newProduct),
     });
