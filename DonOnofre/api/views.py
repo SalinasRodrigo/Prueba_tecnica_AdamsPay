@@ -129,7 +129,8 @@ def getUsers(request):
 @api_view(["POST"])
 def getOneUsers(request):
     data = request.data
-    users = User.objects.get(email=data["email"])
+    print(data)
+    users = User.objects.get(username=data["username"])
     if users.check_password(data["password"]):
         serial_users = UserSerializer(users, many=False)
         return Response(serial_users.data)
@@ -140,17 +141,21 @@ def getOneUsers(request):
 @api_view(["POST"])
 def createUsers(request):
     data = request.data
-    user = User.objects.create_user(
+    try:
+        user = User.objects.get(username=data["username"])
+    except User.DoesNotExist:
+        user = User.objects.create_user(
         username=data["username"], email=data["email"], password=data["password"]
-    )
-    serial_user = UserSerializer(user, many=False)
-    return Response(serial_user.data)
+        )
+        serial_user = UserSerializer(user, many=False)
+        return Response(serial_user.data)
+    return Response("el usuario ya existe")
 
 
 @api_view(["PUT"])
 def updateUsers(request):
     data = request.data
-    user = User.objects.get(email=data["email"])
+    user = User.objects.get(username=data["username"])
     user.set_password(data["password"])
     user.save()
     serialUser = UserSerializer(user, many=False)
@@ -160,10 +165,11 @@ def updateUsers(request):
 def pay(request):
     #Se obtienen los datos de la solicitud
     data = request.data
-
     #Se encuentra el id de la ultima deuda en la base de datos y le sumamos 1
-    debt_id = Debt.objects.latest('id').id + 1
-
+    try:
+        debt_id = Debt.objects.latest('id').id + 1
+    except Debt.DoesNotExist:
+        debt_id = 0
     #Creamos la deuda llmando a la api
     res = payApi(data['description'], data['value'], debt_id)
     
@@ -173,5 +179,5 @@ def pay(request):
     #Guardamos la deuda en la base de datos la deuda
     debt = Debt(description=data['description'], value=data['value'], user=user)
     debt.save()
-
+    print(res)
     return Response(res)

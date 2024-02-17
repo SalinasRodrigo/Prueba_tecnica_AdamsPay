@@ -15,4 +15,4 @@ class DebtSerializer (ModelSerializer):
 class UserSerializer (ModelSerializer):
   class Meta:
     model = User
-    fields = ['username','email','is_staff']
+    fields = ['id','username','email','is_staff']

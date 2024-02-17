@@ -29,14 +29,10 @@ def payApi (description, value, idDeuda):
   
   # Crear JSON
   payload = json.JSONEncoder().encode(post).encode("utf-8")
-  print("payload:\n", payload)
   headers = {"apikey": apiKey, "Content-Type": "application/json", "x-if-exists": siExiste}
-  print("\nheaders\n", headers)
   conn = http.client.HTTPSConnection(host)
   conn.request("POST", path , payload, headers)
-  print("\nconn\n",conn.__str__())
   data = conn.getresponse().read().decode("utf-8")
-  print("\ndata\n",data)
   response = json.JSONDecoder().decode(data)
   
   # Datos retornan en la propiedad "debt"

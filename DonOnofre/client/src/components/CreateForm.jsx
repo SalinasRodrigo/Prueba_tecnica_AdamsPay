@@ -36,6 +36,7 @@ export const CreateForm = () => {
 
     const dialog = document.getElementById(`create`);
     dialog.close();
+    event.target.reset()
   };
 
   return (

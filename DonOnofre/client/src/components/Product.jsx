@@ -1,11 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useCart } from "../hooks/useCart";
+import { useUser } from "../hooks/useUser";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icons";
 import "./Product.css";
 import { UpdateForm } from "./UpdateForm";
 
 export const Product = ({ product }) => {
   const { cart, addToCart, removeFromCart, setProductos } = useCart();
+  const {user} = useUser()
 
   const checkProductInCart = (product) => {
     return cart.some((item) => item.id === product.id);
@@ -43,7 +45,7 @@ export const Product = ({ product }) => {
           <img src={product.thumbnail} alt={product.title} />
           <div className="text">
             <small>{product.description}</small>
-            <b>{product.price}</b>
+            <b>Gs. {product.price}</b>
           </div>
         </div>
         <div className="product-btns">
@@ -56,21 +58,26 @@ export const Product = ({ product }) => {
               <AddToCartIcon />
             </button>
           )}
-          <button onClick={() => handleShow(`delete-${product.id}`)}>
-            Delete
-          </button>
-          <button onClick={() => handleShow(`update-${product.id}`)}>
-            Update
-          </button>
+          {user && user.is_staff ?<>
+            <button onClick={() => handleShow(`delete-${product.id}`)}>
+              Delete
+            </button>
+            <button onClick={() => handleShow(`update-${product.id}`)}>
+              Update
+            </button>
+          </>:
+          <></>}
           <dialog className="form-dialog" id={`update-${product.id}`}>
             <h2>Actualizar Producto</h2>
             <UpdateForm product={product} />
           </dialog>
-          <dialog id={`delete-${product.id}`}>
-            <h2>¿Seguro que desea eliminar este porducto?</h2>
-            <div className="delete-dialog-btns">
-              <button onClick={handleClose}>Cancelar</button>
-              <button onClick={handleDelete}>Eliminar</button>
+          <dialog className="delete-dialog" id={`delete-${product.id}`}>
+            <div>
+              <h2>¿Seguro que desea eliminar este porducto?</h2>
+              <div className="delete-dialog-btns">
+                <button onClick={handleClose}>Cancelar</button>
+                <button onClick={handleDelete}>Eliminar</button>
+              </div>
             </div>
           </dialog>
         </div>

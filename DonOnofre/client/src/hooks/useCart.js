@@ -5,7 +5,7 @@ export const useCart = () => {
   const context = useContext(CartContext)
   
   if(context === undefined){
-    throw new Error('useCart necesita de CartProbider')
+    throw new Error('useCart necesita de CartProvider')
   }
 
   return context

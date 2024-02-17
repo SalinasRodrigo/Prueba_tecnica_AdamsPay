@@ -49,7 +49,22 @@
 }
 
 .delete-dialog-btns{
+  width: 100%;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-around;
+}
+
+.delete-dialog{
+  border-radius: 10px;
+  height: 100px;
+
+  > div {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 }
