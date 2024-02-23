@@ -4,6 +4,7 @@ import { useUser } from "../hooks/useUser";
 import { AddToCartIcon, RemoveFromCartIcon } from "./Icons";
 import "./Product.css";
 import { UpdateForm } from "./UpdateForm";
+import { formatPrice } from "../utility";
 
 export const Product = ({ product }) => {
   const { cart, addToCart, removeFromCart, setProductos } = useCart();
@@ -11,6 +12,23 @@ export const Product = ({ product }) => {
 
   const checkProductInCart = (product) => {
     return cart.some((item) => item.id === product.id);
+  };
+
+  const handleShowUpdate = (name) => {
+    const dialog = document.getElementById(name);
+    fillForm();
+    dialog.showModal();
+  };
+
+  const fillForm = () => {
+    for (let key in product) {
+      let inpt = document.getElementById(`${key}-${product.id}`);
+      if (inpt) {
+        inpt.value = product[key];
+      }
+      console.log(key, product[key]);
+      console.log(inpt);
+    }
   };
 
   const handleShow = (name) => {
@@ -41,58 +59,72 @@ export const Product = ({ product }) => {
 
   return (
     <div>
+      <span className="discount">-{product.discountPercentage}%</span>
       <div key={product.id} className="product-card">
-        <h5>{product.title}</h5>
-        <div className="content">
+        <div className="thumbnail">
           <img src={product.thumbnail} alt={product.title} />
-          <div className="text">
-            <small>{product.description}</small>
-            <b>Gs. {product.price}</b>
+          <div className="product-btns">
+            {!user || !user.is_staff ? (
+              <div>
+                {checkProductInCart(product) ? (
+                  <button
+                    onClick={() => removeFromCart(product)}
+                    style={{ color: "#242424", backgroundColor: "#ffffff" }}
+                  >
+                    <RemoveFromCartIcon />
+                  </button>
+                ) : (
+                  <button onClick={() => addToCart(product)}>
+                    <AddToCartIcon />
+                  </button>
+                )}
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
-        <div className="product-btns">
-          {!user || !user.is_staff ? (
-            <div>
-              {checkProductInCart(product) ? (
-                <button onClick={() => removeFromCart(product)}>
-                  <RemoveFromCartIcon />
-                </button>
-              ) : (
-                <button onClick={() => addToCart(product)}>
-                  <AddToCartIcon />
-                </button>
-              )}
-            </div>
-          ) : (
-            <></>
-          )}
-          {user && user.is_staff ? (
-            <>
-              <button onClick={() => handleShow(`delete-${product.id}`)}>
-                Delete
-              </button>
-              <button onClick={() => handleShow(`update-${product.id}`)}>
-                Update
-              </button>
-            </>
-          ) : (
-            <></>
-          )}
-          <dialog className="form-dialog" id={`update-${product.id}`}>
-            <h2>Actualizar Producto</h2>
-            <UpdateForm product={product} />
-          </dialog>
-          <dialog className="delete-dialog" id={`delete-${product.id}`}>
-            <div>
-              <h2>¿Seguro que desea eliminar este porducto?</h2>
-              <div className="delete-dialog-btns">
-                <button onClick={handleClose}>Cancelar</button>
-                <button onClick={handleDelete}>Eliminar</button>
-              </div>
-            </div>
-          </dialog>
+        <h5>{product.title}</h5>
+        <small className="text">{product.description}</small>
+        <div className="price">
+          <b>
+            {formatPrice(
+              Math.round(
+                product.price -
+                  (product.price * product.discountPercentage) / 100
+              )
+            )}
+          </b>
+          <small>
+            <del>{formatPrice(product.price)}</del>
+          </small>
         </div>
+        {user && user.is_staff ? (
+          <div className="admin-btns">
+            <button onClick={() => handleShow(`delete-${product.id}`)}>
+              Delete
+            </button>
+            <button onClick={() => handleShowUpdate(`update-${product.id}`)}>
+              Update
+            </button>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
+      <dialog className="form-dialog" id={`update-${product.id}`}>
+        <h2>Actualizar Producto</h2>
+        <UpdateForm product={product} />
+      </dialog>
+      <dialog className="delete-dialog" id={`delete-${product.id}`}>
+        <div>
+          <h2>¿Seguro que desea eliminar este porducto?</h2>
+          <div className="delete-dialog-btns">
+            <button onClick={handleClose}>Cancelar</button>
+            <button onClick={handleDelete}>Eliminar</button>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };

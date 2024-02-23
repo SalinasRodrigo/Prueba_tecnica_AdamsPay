@@ -5,13 +5,22 @@ import { CartIcon, ClearCartIcon, PayIcon } from "./Icons";
 import "./Cart.css";
 import { useCart } from "../hooks/useCart";
 import { useUser } from "../hooks/useUser";
+import { formatPrice } from "../utility";
 
-function CartItem({ thumbnail, price, title, quantity, addToCart }) {
+function CartItem({
+  thumbnail,
+  price,
+  discountPercentage,
+  title,
+  quantity,
+  addToCart,
+}) {
   return (
     <li>
       <img src={thumbnail} alt={title} />
       <div>
-        <strong>{title}</strong> - ${price}
+        <strong>{title}</strong> -{" "}
+        {formatPrice(Math.round(price - (price * discountPercentage) / 100))}
       </div>
 
       <footer>

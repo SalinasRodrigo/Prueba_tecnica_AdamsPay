@@ -1,6 +1,7 @@
 
 .product-card{
-  height: 200px;
+  width: 200px;
+  height: 400px;
   background-color: #f2f2f2;
   color: #27272a;
   padding: 20px 30px;
@@ -10,17 +11,24 @@
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  gap: 1rem;
   & img {
-    width: 100px;
-    height: 100px;
+    width: 100%;
     aspect-ratio: 1/1;
-    border-radius: 50%;
+    border-radius: 5px;
+    box-shadow: 0px 0px 7px 1px black;
   }
 
   & h5 {
     margin: 5px;
   } 
+
+  & .thumbnail{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .content{
@@ -31,21 +39,28 @@
 }
 
 .text{
-  display: flex;
-  flex-direction: column;
-  & small {
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
+  width:100%;
+  min-height: 60px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .product-btns{
-  width: 100%;
+  width: 50%;
   display: flex;
+  position: relative;
+  top: 65px;
+  right: 60px;
   align-items: center;
   justify-content: space-around;
+
+    & button {
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      padding: 15px;
+    }
 }
 
 .delete-dialog-btns{
@@ -67,4 +82,32 @@
     align-items: center;
     justify-content: center;
   }
+}
+
+.price{
+  margin-top: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 5px;
+  font-size: large;
+  > small {
+    opacity: 0.7;
+    font-size: small;
+  }
+}
+
+.discount{
+  position: relative;
+  top: 40px;
+  left: 95px;
+  font-size: small;
+  font-weight: 500;
+  color: #d4d4d8;
+  background-color: #fd384f;
+  padding: 2px;
+  border-radius: 5px;
 }
